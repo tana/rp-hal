@@ -234,7 +234,7 @@ macro_rules! impl_alarm {
                 let timestamp_low = (timestamp.ticks() & 0xFFFF_FFFF) as u32;
 
                 // This lock is for time-criticality
-                cortex_m::interrupt::free(|_| {
+                critical_section::with(|_| {
                     let alarm = &timer.$timer_alarm;
 
                     // safety: This is the only code in the codebase that accesses memory address $timer_alarm
